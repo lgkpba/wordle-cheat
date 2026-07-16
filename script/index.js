@@ -49,14 +49,26 @@ function criarCaixas(container, quantidadeCaixas) {
 
 function atualizarCampos() {
     const tamanho = Number(quantidade.value);
+    const larguraDisponivel = document.getElementById("form").clientWidth - 40;
+    const gap = 8;
+
+    const tamanhoCelula = Math.min(
+        60,
+        Math.floor((larguraDisponivel - gap * (tamanho - 1)) / tamanho)
+    );
+
+    document.documentElement.style.setProperty(
+        "--cell-size",
+        `${tamanhoCelula}px`
+    );
 
     criarCaixas(corretas, tamanho);
     criarCaixas(existentes, tamanho);
 
     // Número de colunas igual ao tamanho da palavra
-    corretas.style.gridTemplateColumns = `repeat(${tamanho}, 60px)`;
-    existentes.style.gridTemplateColumns = `repeat(${tamanho}, 60px)`;
-    excluidas.style.gridTemplateColumns = `repeat(${tamanho}, 60px)`;
+    corretas.style.gridTemplateColumns = `repeat(${tamanho}, var(--cell-size))`;
+    existentes.style.gridTemplateColumns = `repeat(${tamanho}, var(--cell-size))`;
+    excluidas.style.gridTemplateColumns = `repeat(${tamanho}, var(--cell-size))`;
 
     excluidas.innerHTML = "";
     criarCampoExcluidas();

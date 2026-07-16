@@ -28,14 +28,22 @@ body {
     justify-content: center;
 }
 
+:root {
+    --cell-size: 56px;
+}
+
 .grid input {
-    width: 55px;
-    height: 55px;
-    border: 2px solid #3A3A3C;
+    box-sizing: border-box;
+
+    width: var(--cell-size);
+    height: var(--cell-size);
+
+    border: 2px solid #3a3a3c;
     background: #121213;
-    color: #FFFFFF;
+    color: white;
+
     text-align: center;
-    font-size: 2rem;
+    font-size: calc(var(--cell-size) * 0.6);
     font-weight: bold;
     text-transform: uppercase;
     outline: none;
