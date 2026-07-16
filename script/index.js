@@ -12,12 +12,17 @@ function criarCaixas(container, quantidadeCaixas) {
 
         input.type = "text";
         input.maxLength = 1;
+        input.autocomplete = "off";
+        input.autocorrect = "off";
+        input.autocapitalize = "characters";
+        input.spellcheck = false;
 
         // Sempre maiúsculo
         input.addEventListener("input", () => {
             input.value = input.value
                 .toUpperCase()
-                .replace(/[^A-ZÀ-ÚÇ]/g, "");
+                .replace(/[^A-ZÀ-ÚÇ]/g, "")
+                .slice(0, 1);
         });
 
         // Vai para a próxima caixa automaticamente
@@ -62,13 +67,16 @@ function criarCampoExcluidas() {
 
     input.type = "text";
     input.maxLength = 1;
+    input.autocomplete = "off";
+    input.autocorrect = "off";
+    input.autocapitalize = "characters";
+    input.spellcheck = false;
 
     input.addEventListener("input", () => {
         input.value = input.value
             .toUpperCase()
-            .replace(/[^A-ZÀ-ÚÇ]/g, "");
-
-        atualizarExcluidas();
+            .replace(/[^A-ZÀ-ÚÇ]/g, "")
+            .slice(0, 1);
     });
 
     input.addEventListener("input", () => {
