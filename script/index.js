@@ -77,6 +77,8 @@ function criarCampoExcluidas() {
             .toUpperCase()
             .replace(/[^A-ZÀ-ÚÇ]/g, "")
             .slice(0, 1);
+            
+        atualizarExcluidas();
     });
 
     input.addEventListener("input", () => {
