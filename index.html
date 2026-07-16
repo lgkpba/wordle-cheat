@@ -1,11 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/index.css">
     <title>Worlde Cheat</title>
 </head>
 <body>
-    <h1>HELLO WORLD!</h1>
+    <div id="form">
+        <label for="quantidade">Quantidade de letras</label>
+        <select name="quantidade" id="quantidade">
+            <option value="3">3 letras</option>
+            <option value="4">4 letras</option>
+            <option value="5" selected>5 letras</option>
+            <option value="6">6 letras</option>
+            <option value="7">7 letras</option>
+            <option value="8">8 letras</option>
+        </select>
+
+        <h2>Letras na posição correta</h2>
+        <div class="grid" id="corretas"></div>
+
+        <h2>Letras existentes</h2>
+        <div class="grid" id="existentes"></div>
+
+        <h2>Letras excluídas</h2>
+        <div class="grid" id="excluidas"></div>
+
+        <button>Buscar</button>
+    </div>
+    <script src="script/index.js"></script>
 </body>
 </html>
