@@ -169,11 +169,8 @@ function buscar() {
     // Letras existentes
     existentes.push(
         ...Array.from(existentesDiv.querySelectorAll("input"))
-            .map((input, indice) => ({
-                letra: input.value.toUpperCase(),
-                posicao: indice
-            }))
-            .filter(item => item.letra !== "")
+            .map(input => input.value.toUpperCase())
+            .filter(letra => letra !== "")
     );
 
     // Letras excluídas
@@ -194,6 +191,7 @@ function buscar() {
 
 function buscarPalavras(tamanho, corretas, existentes, excluidas) {
     const lista = palavras[tamanho];
+    
     if (!lista) return [];
 
     const resultado = [];
@@ -215,21 +213,15 @@ function buscarPalavras(tamanho, corretas, existentes, excluidas) {
         if (!valida) continue;
 
         // Verifica letras existentes
-        for (const item of existentes) {
-
-            // Não pode estar na posição informada
-            if (palavra[item.posicao] === item.letra) {
-                valida = false;
-                break;
-            }
-
-            const indice = letras.indexOf(item.letra);
+        for (const letra of existentes) {
+            const indice = letras.indexOf(letra);
 
             if (indice === -1) {
                 valida = false;
                 break;
             }
 
+            // Consome essa ocorrência
             letras[indice] = null;
         }
 
