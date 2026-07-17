@@ -1,8 +1,20 @@
 const quantidade = document.getElementById("quantidade");
 
-const corretas = document.getElementById("corretas");
-const existentes = document.getElementById("existentes");
-const excluidas = document.getElementById("excluidas");
+const corretasDiv = document.getElementById("corretas");
+const existentesDiv = document.getElementById("existentes");
+const excluidasDiv = document.getElementById("excluidas");
+
+let palavras = {};
+
+async function carregarJSON() {
+    const resposta = await fetch("./data/novo_dicionario.json");
+
+    if (!resposta.ok) {
+        throw new Error("Erro ao carregar JSON.");
+    }
+
+    palavras = await resposta.json();
+}
 
 function criarCaixas(container, quantidadeCaixas) {
     container.innerHTML = "";
@@ -62,15 +74,15 @@ function atualizarCampos() {
         `${tamanhoCelula}px`
     );
 
-    criarCaixas(corretas, tamanho);
-    criarCaixas(existentes, tamanho);
+    criarCaixas(corretasDiv, tamanho);
+    criarCaixas(existentesDiv, tamanho);
 
     // Número de colunas igual ao tamanho da palavra
-    corretas.style.gridTemplateColumns = `repeat(${tamanho}, var(--cell-size))`;
-    existentes.style.gridTemplateColumns = `repeat(${tamanho}, var(--cell-size))`;
-    excluidas.style.gridTemplateColumns = `repeat(${tamanho}, var(--cell-size))`;
+    corretasDiv.style.gridTemplateColumns = `repeat(${tamanho}, var(--cell-size))`;
+    existentesDiv.style.gridTemplateColumns = `repeat(${tamanho}, var(--cell-size))`;
+    excluidasDiv.style.gridTemplateColumns = `repeat(${tamanho}, var(--cell-size))`;
 
-    excluidas.innerHTML = "";
+    excluidasDiv.innerHTML = "";
     criarCampoExcluidas();
 }
 
@@ -109,11 +121,11 @@ function criarCampoExcluidas() {
         }
     });
 
-    excluidas.appendChild(input);
+    excluidasDiv.appendChild(input);
 }
 
 function atualizarExcluidas() {
-    const inputs = [...excluidas.querySelectorAll("input")];
+    const inputs = [...excluidasDiv.querySelectorAll("input")];
 
     // Se a última caixa foi preenchida, cria outra
     const ultimo = inputs[inputs.length - 1];
@@ -123,7 +135,7 @@ function atualizarExcluidas() {
     }
 
     // Remove caixas vazias extras, mantendo apenas uma no final
-    const todos = [...excluidas.querySelectorAll("input")];
+    const todos = [...excluidasDiv.querySelectorAll("input")];
 
     for (let i = todos.length - 2; i >= 0; i--) {
         if (
@@ -137,7 +149,114 @@ function atualizarExcluidas() {
     }
 }
 
+function buscar() {
+    tamanho = quantidade.value
+    
+    const corretas = [];
+    const existentes = [];
+    const excluidas = [];
+
+    // Letras corretas
+    corretas.push(
+        ...Array.from(corretasDiv.querySelectorAll("input"))
+            .map((input, indice) => ({
+                letra: input.value.toUpperCase(),
+                posicao: indice
+            }))
+            .filter(item => item.letra !== "")
+    );
+
+    // Letras existentes
+    existentes.push(
+        ...Array.from(existentesDiv.querySelectorAll("input"))
+            .map((input, indice) => ({
+                letra: input.value.toUpperCase(),
+                posicao: indice
+            }))
+            .filter(item => item.letra !== "")
+    );
+
+    // Letras excluídas
+    excluidas.push(
+        ...Array.from(excluidasDiv.querySelectorAll("input"))
+            .map(input => input.value.toUpperCase())
+            .filter(letra => letra !== "")
+    );
+
+    const resultado = buscarPalavras(
+        tamanho,
+        corretas,
+        existentes,
+        excluidas
+    );
+    console.log(resultado)
+}
+
+function buscarPalavras(tamanho, corretas, existentes, excluidas) {
+    const lista = palavras[tamanho];
+    if (!lista) return [];
+
+    const resultado = [];
+
+    for (const palavra in lista) {
+        let valida = true;
+        const letras = palavra.split("");
+
+        // Verifica letras corretas
+        for (const item of corretas) {
+            if (palavra[item.posicao] !== item.letra) {
+                valida = false;
+                break;
+            }
+
+            letras[item.posicao] = null;
+        }
+
+        if (!valida) continue;
+
+        // Verifica letras existentes
+        for (const item of existentes) {
+
+            // Não pode estar na posição informada
+            if (palavra[item.posicao] === item.letra) {
+                valida = false;
+                break;
+            }
+
+            const indice = letras.indexOf(item.letra);
+
+            if (indice === -1) {
+                valida = false;
+                break;
+            }
+
+            letras[indice] = null;
+        }
+
+        if (!valida) continue;
+
+        // Verifica letras excluídas
+        for (const letra of excluidas) {
+            if (letras.includes(letra)) {
+                valida = false;
+                break;
+            }
+        }
+
+        if (valida) {
+            resultado.push(palavra);
+        }
+    }
+
+    return resultado;
+}
+
+async function iniciar() {
+    await carregarJSON();
+    atualizarCampos();
+}
+
 quantidade.addEventListener("change", atualizarCampos);
 
 // Inicializa a página
-atualizarCampos();
+iniciar();
