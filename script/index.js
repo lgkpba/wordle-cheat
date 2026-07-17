@@ -186,7 +186,8 @@ function buscar() {
         existentes,
         excluidas
     );
-    console.log(resultado)
+    
+    mostrarResultados(resultado);
 }
 
 function buscarPalavras(tamanho, corretas, existentes, excluidas) {
@@ -241,6 +242,22 @@ function buscarPalavras(tamanho, corretas, existentes, excluidas) {
     }
 
     return resultado;
+}
+
+function mostrarResultados(resultado) {
+    const lista = document.getElementById("listaResultados");
+    const quantidade = document.getElementById("quantidadeResultados");
+
+    lista.innerHTML = "";
+
+    quantidade.textContent =
+        `${resultado.length} palavra(s) encontrada(s).`;
+
+    for (const palavra of resultado) {
+        const item = document.createElement("li");
+        item.textContent = palavra;
+        lista.appendChild(item);
+    }
 }
 
 async function iniciar() {

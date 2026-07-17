@@ -121,3 +121,38 @@ label {
 
     letter-spacing: .5px;
 }
+
+#resultados {
+    margin-top: 20px;
+    padding-top: 20px;
+
+    border-top: 1px solid #3A3A3C;
+}
+
+#quantidadeResultados {
+    margin: 10px 0;
+    color: #BBBBBB;
+}
+
+#listaResultados {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 8px;
+
+    padding: 0;
+    margin: 0;
+
+    list-style: none;
+}
+
+#listaResultados li {
+    padding: 10px;
+
+    background: #121213;
+    border: 1px solid #3A3A3C;
+    border-radius: 6px;
+
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+}
