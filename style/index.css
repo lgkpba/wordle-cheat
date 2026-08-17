@@ -22,6 +22,31 @@ body {
     gap: 10px;
 }
 
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.hide-stuff {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.hide-stuff img {
+    display: block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.hide-stuff:hover .dropdown-content {display: block;}
+
 .grid {
     display: grid;
     gap: 8px;
@@ -61,7 +86,7 @@ body {
     border-color: #FFFFFF;
 }
 
-button {
+#buscar {
     width: 100%;
     max-width: 320px;
     margin: 15px auto 0;
@@ -84,7 +109,7 @@ button {
     transition: background-color .2s, transform .15s;
 }
 
-button:hover {
+#buscar:hover {
     background-color: #6AAA64;
 }
 

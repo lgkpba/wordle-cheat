@@ -8,7 +8,9 @@
 </head>
 <body>
     <div id="form">
-        <label for="quantidade">Quantidade de letras</label>
+        <label for="quantidade">
+            <h2>Quantidade de letras</h2>
+        </label>
         <select name="quantidade" id="quantidade">
             <option value="3">3 letras</option>
             <option value="4">4 letras</option>
@@ -18,16 +20,30 @@
             <option value="8">8 letras</option>
         </select>
 
-        <h2>Letras na posição correta</h2>
+        <div class="header">
+            <h2>Letras na posição correta</h2>
+            <button class="hide-stuff">
+                <img src="misc/design.svg" width="35">
+                <div class="dropdown-content">
+                    Insert the letters you're certain about the position, in the position they appear
+                </div>
+            </btn>
+        </div>
         <div class="grid" id="corretas"></div>
 
-        <h2>Letras existentes</h2>
+        <div class="header">
+            <h2>Letras existentes</h2>
+            <img src="misc/design.svg" width="5%">
+        </div>
         <div class="grid" id="existentes"></div>
 
-        <h2>Letras excluídas</h2>
+        <div class="header">
+            <h2>Letras excluídas</h2>
+            <img src="misc/design.svg" width="5%">
+        </div>
         <div class="grid" id="excluidas"></div>
 
-        <button onclick="buscar()">Buscar</button>
+        <button id="buscar" onclick="buscar()">Buscar</button>
 
         <div id="resultados">
             <h2>Resultados</h2>
