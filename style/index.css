@@ -136,14 +136,23 @@ label {
 
 #listaResultados {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 8px;
+
     width: 100%;
+    padding: 0;
+    margin: 0;
+
+    list-style: none;
 }
 
 #listaResultados li {
+    box-sizing: border-box;
+
+    width: 100%;
     min-width: 0;
-    padding: 10px 4px;
+
+    padding: 10px 6px;
 
     background: #121213;
     border: 1px solid #3A3A3C;
@@ -154,5 +163,5 @@ label {
     text-transform: uppercase;
 
     white-space: nowrap;
-    overflow: hidden;
+    overflow: visible;
 }
